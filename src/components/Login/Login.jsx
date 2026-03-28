@@ -5,18 +5,20 @@ import auth from "../../firebase/firebase.init.js";
 
 const Login = () => {
   const [errorMessage, setErrorMessage] = useState("");
+  const [success, setSuccess] = useState(false);
 
   const handleLogin = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
     console.log(email, password);
-
+    setSuccess(false);
     setErrorMessage("");
 
     signInWithEmailAndPassword(auth, email, password)
       .then((result) => {
         console.log(result.user);
+        setSuccess(true);
       })
       .catch((error) => {
         console.log(error);
@@ -75,6 +77,9 @@ const Login = () => {
           </button>
         </form>
         {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+        {success && (
+          <p className="text-green-500">User logged in successfully</p>
+        )}
 
         <div className="mt-6 text-center text-sm text-slate-500">
           <p>
