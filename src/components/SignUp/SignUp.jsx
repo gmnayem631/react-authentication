@@ -1,16 +1,28 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import auth from "../../firebase/firebase.init";
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa6";
 
 const SignUp = () => {
   const [success, setSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSignUp = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log(email, password);
+    const terms = e.target.terms.checked;
+
+    console.log(email, password, terms);
+
+    if (terms === false) {
+      setErrorMessage(
+        "Please accept the terms and conditions to create an account",
+      );
+      return;
+    }
 
     const passRegEx = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z\d]).{5,}$/;
     if (!passRegEx.test(password)) {
@@ -44,15 +56,30 @@ const SignUp = () => {
             placeholder="Email"
           />
           <label className="label mt-4">Password</label>
-          <input
-            type="password"
-            name="password"
-            className="input"
-            placeholder="Password"
-          />
+          <div className="relative">
+            <input
+              type={`${showPassword ? "text" : "password"}`}
+              name="password"
+              className="input"
+              placeholder="Password"
+            />
+            <button
+              onClick={() => setShowPassword(!showPassword)}
+              type="button"
+              className="btn btn-xs absolute right-5 text-white top-2"
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
+          </div>
+
           <div>
             <a className="link link-hover">Forgot password?</a>
           </div>
+          <label className="label">
+            <input name="terms" type="checkbox" className="checkbox" />
+            Terms & Conditions
+          </label>
+          <br />
           <button className="btn btn-neutral mt-4">Sign Up</button>
         </form>
         {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
