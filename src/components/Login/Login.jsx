@@ -1,7 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import auth from "../../firebase/firebase.init.js";
 
 const Login = () => {
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    console.log(email, password);
+
+    setErrorMessage("");
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then((result) => {
+        console.log(result.user);
+      })
+      .catch((error) => {
+        console.log(error);
+        setErrorMessage(error.message);
+      });
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4 py-10">
       <div className="w-full max-w-md bg-white border border-slate-200 shadow-sm rounded-3xl p-8">
@@ -12,7 +34,7 @@ const Login = () => {
           </p>
         </div>
 
-        <form className="mt-8 space-y-6">
+        <form onSubmit={handleLogin} className="mt-8 space-y-6">
           <div className="space-y-4">
             <label
               className="block text-sm font-medium text-slate-700"
@@ -46,17 +68,18 @@ const Login = () => {
           </div>
 
           <button
-            type="button"
+            type="submit"
             className="w-full rounded-2xl bg-sky-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-200"
           >
             Sign in
           </button>
         </form>
+        {errorMessage && <p className="text-red-500">{errorMessage}</p>}
 
         <div className="mt-6 text-center text-sm text-slate-500">
           <p>
             Don&apos;t have an account?{" "}
-            <Link to={"/register"}>
+            <Link to={"/signUp"}>
               {" "}
               <span className="font-semibold text-slate-900">Register</span>
             </Link>

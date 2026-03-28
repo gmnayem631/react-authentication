@@ -43,9 +43,7 @@ const Register = () => {
                 className="input border-slate-200 bg-slate-50 text-sm text-slate-900"
                 placeholder="Password"
               />
-              <div>
-                <a className="link link-hover">Forgot password?</a>
-              </div>
+
               <input
                 className="btn btn-primary text-white font-semibold"
                 type="submit"

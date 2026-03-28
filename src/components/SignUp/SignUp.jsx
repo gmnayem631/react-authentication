@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import auth from "../../firebase/firebase.init";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa6";
+import { Link } from "react-router";
 
 const SignUp = () => {
   const [success, setSuccess] = useState(false);
@@ -86,6 +87,15 @@ const SignUp = () => {
         {success && (
           <p className="text-green-500 text-sm">Registration Successful</p>
         )}
+      </div>{" "}
+      <div className="text-center text-sm text-white">
+        <p>
+          Already have an account?{" "}
+          <Link to={"/login"}>
+            {" "}
+            <span className="font-semibold text-teal-300">Login</span>
+          </Link>
+        </p>
       </div>
     </div>
   );
