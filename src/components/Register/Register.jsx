@@ -39,6 +39,7 @@ const Register = () => {
               <input
                 type="password"
                 name="password"
+                pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z\d]).{5,}$"
                 className="input border-slate-200 bg-slate-50 text-sm text-slate-900"
                 placeholder="Password"
               />
