@@ -13,12 +13,12 @@ const Login = () => {
     const password = e.target.password.value;
     console.log(email, password);
     setSuccess(false);
-    setErrorMessage("");
 
     signInWithEmailAndPassword(auth, email, password)
       .then((result) => {
         console.log(result.user);
         setSuccess(true);
+        setErrorMessage("");
       })
       .catch((error) => {
         console.log(error);
